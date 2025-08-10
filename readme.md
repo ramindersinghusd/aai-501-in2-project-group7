@@ -39,13 +39,6 @@ The results show that machine learning can effectively predict diabetes by using
 - Raminder Singh [ramindersingh@sandiego.edu]
 - George David Asirvatharaj [gdavidasirvatharaj@sandiego.edu]
 
-
-### Methods Used
-Markdown is a lightweight markup language based on the formatting conventions
-that people naturally use in email.
-As [John Gruber] writes on the [Markdown site][df1]
-
-
 ### Technologies
 
 - [Python] - framework to use statistics lib and visualizations
@@ -61,67 +54,66 @@ nbconvert[webpdf] nbconvert notebook-as-pdf seaborn xgboost shap openpyxl
 
 **_Extracts taken from project report_**
 
-The main issue being investigated is the choice between predicting the exact quality score using regression or using classification to tell wines apart based on quality. Scores of 7 or higher designate good quality in this report. We aim to analyze the dataset, create different machine-learning models for both regression and classification, compare them, and measure their results (Bhardwaj et al., 2022). Machine learning methods, and more specifically, Random Forest models, can predict the quality of white wine using chemical information, which is helpful for both growers and wine drinkers.
+Healthcare has been changed due to the inclusion of machine learning (ML) that has allowed predictive models to help diagnose and predict a disease. More specifically, ML algorithms are capable of detecting trends in complicated healthcare-related information, including medical records and patient history (Olalekan Kehinde, 2025). These models have been strong in disease prediction of such illnesses as diabetes, empowering early diagnosis, individualized treatment approaches, and patient outcomes, becoming one of the sources of change in medical practice across the world. 
 
-In the first phase of analysis, we checked the dataset to see if any information was missing or incorrect. There are 12 columns in the white wine dataset: eleven feature columns with wine property information and just one target column for wine quality. Fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol content are part of the feature columns (Yavas et al., 2025). The quality variable, considered the target, is given as a number between 0 and 10.
+This report aims to use machine learning to predict diabetes with the help of a dataset consisting of several health characteristics. Such models as logistic regression, random forest, XGBoost, and K-nearest neighbors (KNN) will be applied to cluster patients into diabetic and non-diabetic. Its primary goals would be data preprocessing, metrics assessment of the model performance, and the choice of the most adequate model depending on the accuracy and interpretability.
 
-The data used contains 4,898 white wine samples that have a variety of chemical features. Most fixed acidity measurements are around 6.85, but they may be as low as 3.8 or as high as 14.2. Volatile acidity is usually 0.28, and most wines have alcohol levels of 8.4% to 14.2%, averaging 10.5%. Most wines are in the middle of the quality range, based on the fact that quality scores run from 3 to 9, with an average score of around 5.88. The fact that sulphates and pH do not always stay the same indicates they may affect the wine's flavor.
+In the first phase of analysis, The histograms show graphically the number of occurrences of numerical data like age, BMI, HbA1c, and blood glucose levels. The age attribute has a maximum at 50 years, signifying that many of the people would be in middle age. The BMI shows a high peak of 30 that indicates more people are overweight or obese. The concentration of HbA1c level is maximized at 6 with some elevated measurements. The concentration of blood glucose has been highly concentrated between 100 and 150 mg/dL. The distribution of diabetes is very skewed, as the cases of non-diabetes are bigger in number.
+
+HbA1c level also has a strong positive relationship with blood glucose level of 0.42, which shows that an increase in blood glucose level implies an increase in HbA1c level. The correlations between age and BMI with diabetes are also positive but moderate (0.26 and 0.21, respectively), which implies that diabetes is more likely to occur in older people and in people who have higher BMI. 
+
+The dataset utilized in this study was an open public one related to the prediction of diabetes. It contains 100,000 rows and 8 columns featuring age, gender, the presence of hypertension, heart disease, body mass index (BMI), level of HbA1c, level of blood glucose, and history of smoking. The target variable is the presence or absence of diabetes (1) or not (0). The features act as predictors when determining the existence or the nonexistence of diabetes.
+
+Logistic regression is an efficient but easy model of binary classification. It avails the interpretability of estimating the probability of an outcome on the basis of input features. In this diabetic prediction model, the logistic regression had a performance accuracy of 95.90%, a precision of 86.46%, and a recall of 61.71%, showing that although the model performs sufficiently in distinguishing between the non-diabetic instances, it does not perform well when it comes to recognizing the diabetic instances. F1 was 0.7202, and ROC AUC was 0.8040, which displays a satisfactory result.
+
+The Random Forest algorithm also gives good clues as to which features are the most influential following the predictions of diabetes. The level of HbA1c and the level of blood glucose have the most significance, having the relative importance of 0.3971 and 0.3296, respectively, and thus are the most relevant ones in predicting diabetes. Other significant characteristics are the BMI (0.1220) and age (0.1004) that also significantly contribute towards the decisions made by the model. Such features as heart disease (0.0107) and gender (0.0000) are of very low importance as compared to the others.
+
+XGBoost is a powerful model that runs on gradient boosting, and it is also great with imbalanced data. XGBoost presented an accuracy of 97.17 percent, a precision of 95.68 percent, and a recall of 69.96 percent in the given diabetes prediction problem. This showed a good precision versus recall balance F1 of 0.8083. The ROC AUC value of 0.8483 also shows that it is able to, in a strong way, separate the classes compared to having simpler models such as the logistic regression.
+
+The performance of each model based on their evaluation results is impressive, with Random Forest ranking ahead, as it achieved an accuracy of 96.99% and a precision of 94.67, and XGBoost almost followed with an accuracy of 97.17% and a precision of 95.68. Both models have high recall scores, which are 69.96 percent and 68.68 percent, respectively, and thus demonstrate that they are effective in identifying positive cases of diabetics. Logistic regression with the accuracy of 95.90 also proved to be very accurate but had a lower recall, 61.71, and thus, it was not as good at identifying diabetic patients as the ensemble models. KNN was a good baseline, where it achieved a 96.07% rate of accuracy but with a low rate of recall of 61.07 and a rate of precision of 89.60.
 ```
-Summary statistics:
-       fixed acidity  volatile acidity  citric acid  residual sugar  \
-count    4898.000000       4898.000000  4898.000000     4898.000000   
-mean        6.854788          0.278241     0.334192        6.391415   
-std         0.843868          0.100795     0.121020        5.072058   
-min         3.800000          0.080000     0.000000        0.600000   
-25%         6.300000          0.210000     0.270000        1.700000   
-50%         6.800000          0.260000     0.320000        5.200000   
-75%         7.300000          0.320000     0.390000        9.900000   
-max        14.200000          1.100000     1.660000       65.800000   
+Basic statistics for numerical features:
+                 age  hypertension  heart_disease            bmi  \
+count  100000.000000  100000.00000  100000.000000  100000.000000   
+mean       41.885856       0.07485       0.039420      27.320767   
+std        22.516840       0.26315       0.194593       6.636783   
+min         0.080000       0.00000       0.000000      10.010000   
+25%        24.000000       0.00000       0.000000      23.630000   
+50%        43.000000       0.00000       0.000000      27.320000   
+75%        60.000000       0.00000       0.000000      29.580000   
+max        80.000000       1.00000       1.000000      95.690000   
 
-         chlorides  free sulfur dioxide  total sulfur dioxide      density  \
-count  4898.000000          4898.000000           4898.000000  4898.000000   
-mean      0.045772            35.308085            138.360657     0.994027   
-std       0.021848            17.007137             42.498065     0.002991   
-min       0.009000             2.000000              9.000000     0.987110   
-25%       0.036000            23.000000            108.000000     0.991723   
-50%       0.043000            34.000000            134.000000     0.993740   
-75%       0.050000            46.000000            167.000000     0.996100   
-max       0.346000           289.000000            440.000000     1.038980   
-
-                pH    sulphates      alcohol      quality  
-count  4898.000000  4898.000000  4898.000000  4898.000000  
-mean      3.188267     0.489847    10.514267     5.877909  
-std       0.151001     0.114126     1.230621     0.885639  
-min       2.720000     0.220000     8.000000     3.000000  
-25%       3.090000     0.410000     9.500000     5.000000  
-50%       3.180000     0.470000    10.400000     6.000000  
-75%       3.280000     0.550000    11.400000     6.000000  
-max       3.820000     1.080000    14.200000     9.000000  
+         HbA1c_level  blood_glucose_level       diabetes  
+count  100000.000000        100000.000000  100000.000000  
+mean        5.527507           138.058060       0.085000  
+std         1.070672            40.708136       0.278883  
+min         3.500000            80.000000       0.000000  
+25%         4.800000           100.000000       0.000000  
+50%         5.800000           140.000000       0.000000  
+75%         6.200000           159.000000       0.000000  
+max         9.000000           300.000000       1.000000  
 ```
-Distribution plots highlight clear patterns in the most important physicochemical properties of white wine. For fixed acidity, volatile acidity, and citric acid, there are more cases with lower values and fewer with higher values, showing a distribution that is taller on the left than on the right.
 
-The correlation matrix demonstrates the relationship between different wine properties and quality. A strong and positive relationship (0.44) exists between higher alcohol content and increased perceived quality
+The histograms show graphically the number of occurrences of numerical data like age, BMI, HbA1c, and blood glucose levels. The age attribute has a maximum at 50 years, signifying that many of the people would be in middle age. The BMI shows a high peak of 30 that indicates more people are overweight or obese. The concentration of HbA1c level is maximized at 6 with some elevated measurements. The concentration of blood glucose has been highly concentrated between 100 and 150 mg/dL. The distribution of diabetes is very skewed, as the cases of non-diabetes are bigger in number.
 
-The boxplots reveal that multiple chemical measurements are linked to the quality of the wine. The best wines usually contain higher amounts of alcohol than lesser qualities
+Blood glucose and HbA1c levels are strongly correlated (0.42), Moderate correlation between diabetes, age (0.26) and BMI (0.21), Correlation analysis reveals key predictors for diabetes prediction Understanding relationships between features is crucial for model selection.
 
-The project involved investigating and solving problems of the types of regression and classification. In regression, we tried to estimate the wine quality, while in classification, we marked wines as Good or Bad if their score was higher or lower than 7. The regression approach and the tested models for predicting quality values are at the center of this section.
-Three models were tested: Linear Regression, Random Forest Regressor, and XGBoost Regressor. The fact that Linear Regression is simple and easy to explain is why it is considered the first model. However, it considers that features and the target are linked linearly, though this may not be sufficient for wine quality data. Because the Random Forest Regressor is an ensemble of trees, it handles nonlinear problems and multiple interactions and tends to improve accuracy. Another important type of ensemble method, XGBoost, applies gradient boosting and usually performs well on structured information due to its strong optimization and regularization.
+Logistic Regression is a binary classification model based on probability It is interpretable and provides insights into the relationship between features and diabetes
+Suitable for linearly separable data        Simple and effective for baseline model comparison
 
-Evaluation of the models took into account three regression indicators: Root Mean Squared Error (RMSE), Mean Absolute Error (MAE), and R-squared (R²). They measure how accurate the predictions are and the number of changes in the dataset that the model can explain. 
+Random Forest is an ensemble method that uses multiple decision trees It aggregates results from multiple trees for robust predictions The model is capable of capturing complex patterns in data It helps identify feature importance, providing insight into predictors
 
-The classification task focused on comparing "Good" wines (quality ≥ 7) with "Bad" wines using logistic regression, Random Forest, and XGBoost classifiers. The highest accuracy (0.893), precision (0.859), recall (0.643), and F1-score (0.736) were achieved by Random Forest. 
+The XGBoost model correctly predicted 97.17% of the cases. The model correctly identified 95.68% of the positive predictions as diabetic cases. The recall of 69.96% indicates that the model correctly identified 69.96% of actual diabetic patients. An F1 score of 0.8083 shows a good balance between precision and recall. The ROC AUC of 0.8483 reflects the model’s strong ability to discriminate between diabetic and non-diabetic cases.
 
-The confusion matrix for the Random Forest classifier shows that out of the total samples, 729 wines were correctly classified as "Bad" (true negatives), and 146 wines were correctly identified as "Good" (true positives). However, 24 "Bad" wines were misclassified as "Good" (false positives), and 81 "Good" wines were misclassified as "Bad" (false negatives). 
+The KNN model correctly predicted 96.07% of the cases in the dataset. The model correctly identified 89.60% of the predicted diabetic cases. The recall of 61.07% indicates that the model identified 61.07% of the actual diabetic patients. An F1 score of 0.7263 reflects a moderate balance between precision and recall. The ROC AUC of 0.8020 shows the model’s ability to distinguish between diabetic and non-diabetic cases.
 
-Feature importance plot illustrates how each physicochemical property affects the prediction of wine quality. Alcohol has a much bigger impact than any other factor in this analysis. This agrees with research that shows a good connection between alcohol concentration and the taste of a wine. 
+XGBoost has higher ROC AUC and Recall and good in distinguishing between the two classes and is also the most effective at identifying the actual positive cases (diabetic patients). Random Forest Tuned is the next closest to have a high ROC AUC and Recall
 
-Main challenges were (1) having a single way of running jupyter notebook, and  (2) adopting the github use of the work as few team members were very new to git and github. This also include to understand different ways to create organizations, provide access inside github which took more time than expected.
-
-For full details refer to [Final-Project-Report-Team-4.pdf]
+For full details refer to [AAI-501-IN2-Group7-project-final.pdf]
 
 ### License
 MIT
 - Top-level fiter expression: _owner:ramindersinghusd license:MIT_
 
 ### Acknowledgments
-We as Team-4 members really thankful to Prof Azka A for her support, guidance and  making it some easily for us to understand the Probability and Statistics fundamentals throughout this module - AAI-IN2-500 
+We as Team-4 members really thankful to Prof Azka A for her support, guidance and  making it some easily for us to understand the Probability and Statistics fundamentals throughout this module - AAI-501-IN2
